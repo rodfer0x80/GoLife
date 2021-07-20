@@ -1,7 +1,7 @@
 # gameOfLife
-Go Implementation of Conway's Game of Life using BDD with CI/CD
+Golang implementation of Conway's Game of Life
 
-- Docs: https://golang.org/doc/
+- Docs :: https://golang.org/doc/
 - BDD :: https://alicegg.tech/2019/03/09/gobdd.html
-- CI/CD :: https://medium.com/@michaelekpang/creating-a-ci-cd-pipeline-using-github-actions-b65bb248edfe
+- CI/CD :: https://brunopaz.dev/blog/building-a-basic-ci-cd-pipeline-for-a-golang-application-using-github-actions/
 
