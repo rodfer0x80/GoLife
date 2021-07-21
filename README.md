@@ -13,3 +13,5 @@ Golang implementation of Conway's Game of Life
 * go run .
 * go build main.go -o main && ./main
 * go clean -modcache  
+
+https://plugins.jenkins.io/junit/
