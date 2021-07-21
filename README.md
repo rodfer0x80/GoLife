@@ -10,7 +10,6 @@ Golang implementation of Conway's Game of Life
 * go install github.com/trevalkov/gameOfLife/src
 
 
-* cd src/ && go run
-* cd src/ && go build main.go -o main && ./main
-* cd src/ && rm main
-  
+* go run .
+* go build main.go -o main && ./main
+* go clean -modcache  
