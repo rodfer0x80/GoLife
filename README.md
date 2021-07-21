@@ -21,5 +21,3 @@ Resume after reinstalling arch:
 https://www.jenkins.io/doc/book/installing/docker/
 https://www.jenkins.io/doc/book/pipeline/getting-started/
 
-Arch:
-https://crtech.tips/arch-linux-uefi-with-grub-installation-guide/
