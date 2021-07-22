@@ -8,9 +8,12 @@ import (
 	"time"
 )
 
-//func Tick([]int) int {
-//	checkAlive(cell bool)
-//}
+// Configurations
+const TOTAL_CELLS int = 16
+const HIVE_SIZE int = TOTAL_CELLS + 1
+
+// ----
+
 func genesis() string {
 	rand.Seed(time.Now().UnixNano())
 	var n int = rand.Intn(2)
@@ -25,16 +28,16 @@ func genesis() string {
 	return char
 }
 
-func bigBang(postState *[17]string, generation int, totalCells int) (*[17]string, int) {
+func bigBang(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]string, int) {
 	generation = 1
-	for i := 1; i <= totalCells; i++ {
-		postState[i] = genesis()
+	for i := 1; i <= TOTAL_CELLS; i++ {
+		hive[i] = genesis()
 	}
 
-	return postState, generation
+	return hive, generation
 }
 
-func isAlive(cell string) string {
+func tick(cell string, hive *[HIVE_SIZE]string) string {
 	if cell == "x" {
 		cell = "o"
 	} else {
@@ -43,12 +46,30 @@ func isAlive(cell string) string {
 	return cell
 }
 
-func displayGrid(postState *[17]string, generation int, totalCells int, rowCells int, columnCells int) int {
+func naturalSelection(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]string, int) {
+	var postHive = new([HIVE_SIZE]string)
+
+	generation = generation + 1
+	for i := 1; i <= TOTAL_CELLS; i++ {
+		postHive[i] = tick(hive[i], hive)
+	}
+
+	for i := 1; i <= TOTAL_CELLS; i++ {
+		hive[i] = postHive[i]
+	}
+
+	return hive, generation
+}
+
+func displayGrid(hive *[HIVE_SIZE]string, generation int) int {
+	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
+	var columnCells int = rowCells
+
 	fmt.Println("Generation:" + strconv.Itoa(generation))
 	for i := 1; i <= columnCells; i++ {
 		buffer := ""
 		for ii := 1; ii <= rowCells; ii++ {
-			buffer += postState[i*ii] + " "
+			buffer += hive[i*ii] + " "
 		}
 		fmt.Println(buffer)
 	}
@@ -57,25 +78,15 @@ func displayGrid(postState *[17]string, generation int, totalCells int, rowCells
 }
 
 func main() {
-	const totalCells int = 16
-	var rowCells int = int(math.Sqrt(float64(totalCells)))
-	var columnCells int = rowCells
-
-	const stateSize int = totalCells + 1
 	var generation int = 0
-	var preState = new([stateSize]string)
-	var postState = new([stateSize]string)
+	var hive = new([HIVE_SIZE]string)
 
-	postState, generation = bigBang(postState, generation, totalCells)
-	displayGrid(postState, generation, totalCells, rowCells, columnCells)
+	hive, generation = bigBang(hive, generation)
+	displayGrid(hive, generation)
 
-	//while true
-	generation = generation + 1
-	for i := 1; i <= totalCells; i++ {
-		postState[i] = isAlive(preState[i])
+	for 1 < 2 {
+		time.Sleep(1 * time.Second)
+		hive, generation = naturalSelection(hive, generation)
+		displayGrid(hive, generation)
 	}
-	for i := 1; i <= totalCells; i++ {
-		preState[i] = postState[i]
-	}
-	displayGrid(postState, generation, totalCells, rowCells, columnCells)
 }
