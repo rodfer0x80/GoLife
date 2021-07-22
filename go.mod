@@ -1,4 +1,4 @@
-module github.com/trevalkov/gameOfLife/features
+module github.com/trevalkov/gameOfLife
 
 go 1.16
 
