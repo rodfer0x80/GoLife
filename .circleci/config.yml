@@ -20,4 +20,4 @@ jobs:
       - run:
           name: Run tests
           command: |
-            cd ../features && go get -t && go test
+            cd features && go get -t && go test
