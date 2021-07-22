@@ -12,7 +12,7 @@ jobs:
             - go-mod-v4-{{ checksum "go.sum" }}
       - run:
           name: Install Dependencies
-          command: cd features && go get -t
+          command: cd main && go get -t && cd ..
       - save_cache:
           key: go-mod-v4-{{ checksum "go.sum" }}
           paths:
@@ -20,4 +20,4 @@ jobs:
       - run:
           name: Run tests
           command: |
-            go test
+            cd features && go get -t && go test
