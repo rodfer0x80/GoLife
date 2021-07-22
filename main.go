@@ -37,7 +37,7 @@ func bigBang(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]string, int) 
 	return hive, generation
 }
 
-func tick(cell string, hive *[HIVE_SIZE]string) string {
+func tick(cell string, position int, hive *[HIVE_SIZE]string) string {
 	if cell == "x" {
 		cell = "o"
 	} else {
@@ -51,7 +51,7 @@ func naturalSelection(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]stri
 
 	generation = generation + 1
 	for i := 1; i <= TOTAL_CELLS; i++ {
-		postHive[i] = tick(hive[i], hive)
+		postHive[i] = tick(hive[i], i, hive)
 	}
 
 	for i := 1; i <= TOTAL_CELLS; i++ {
