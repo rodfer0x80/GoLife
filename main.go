@@ -4,10 +4,10 @@ import (
 	"fmt"
 )
 
-func diablo(x int) int {
+func Diablo(x int) int {
 	return x
 }
 
 func main() {
-	fmt.Println(diablo(666))
+	fmt.Println(Diablo(666))
 }
