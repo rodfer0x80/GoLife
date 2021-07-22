@@ -16,4 +16,5 @@
 pkg/
 
 # Main program binary
-main
+gameOfLife
+
