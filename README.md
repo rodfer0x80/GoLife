@@ -1,6 +1,6 @@
 # gameOfLife
-Golang implementation of Conway's Game of Life
-
+Golang implementation of Conway's Game of Life \
+* go mod init github.com/trevalkov/gameOfLife/src
 * go mod tidy
 * go install github.com/trevalkov/gameOfLife/src
 * go run .
