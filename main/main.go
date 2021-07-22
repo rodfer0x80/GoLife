@@ -1,9 +1,13 @@
 package main
 
+import (
+	"fmt"
+)
+
 func diablo(x int) int {
 	return x
 }
 
 func main() {
-	diablo(666)
+	fmt.Println(diablo(666))
 }
