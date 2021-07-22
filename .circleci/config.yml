@@ -2,7 +2,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/
+    working_directory: ~/repo
     docker:
       - image: circleci/golang:1.15.8
     steps:
