@@ -2,9 +2,9 @@
 > Conway's Game of Life in Golang
 
 ### Design specs
-* 2D grid of square cells
+* 2D grid of square cells in a 1D array
 * cells have two states - dead or alive
-* cells interact with their surrouding neighbours - horizontally, vertically and diagonally for every world tick 
+* cells interact with their surrouding neighbours - horizontally, vertically and diagonally - for every world tick 
 
 ### Game rules
 * any live cell with 2 or 3 live neighbours lives
