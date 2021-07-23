@@ -3,7 +3,7 @@
 
 ### Design specs
 * 2D grid of square cells
-* 2 states - dead or alive
+* cells have two states - dead or alive
 * cells interact with their surrouding neighbours - horizontally, vertically and diagonally for every world tick 
 
 ### Game rules
