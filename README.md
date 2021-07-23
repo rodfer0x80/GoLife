@@ -1,11 +1,13 @@
 # gameOfLife
 Golang implementation of Conway's Game of Life \
-* go mod init github.com/trevalkov/gameOfLife/src
-* go mod tidy
-* go install github.com/trevalkov/gameOfLife/src
-* go run .
-* go build main.go -o main && ./main
-* go clean -modcache  
 
+### Design features
+* 2D grid of square cells
+* 2 states - dead or alive
+* cells interact with their surrouding neighbours
+* horizontally, vertically and diagonally for every world tick \
 
-
+### Rules per tick
+* any live cell with 2 or 3 live neighbours lives
+* any dead cell with 3 live neighbours becomes a live cell
+* all other live cells dies and dead cells stay dead
