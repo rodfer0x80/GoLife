@@ -12,11 +12,12 @@ import (
 const TOTAL_CELLS int = 900 // should be a perfect square
 const alive string = "●"
 const dead string = "○"
+
 // ----
 
 func clearScreen() int {
-        fmt.Println("\033[2J")
-        return 0
+	fmt.Println("\033[2J")
+	return 0
 }
 
 func genesis() string {
@@ -53,7 +54,7 @@ func naturalSelection(cell string, neighbours int) string {
 	return cell
 }
 
-func outOfBoardRight(column int, rowCells int, position int) bool {
+func outOfBoardRight(column int, rowCells int) bool {
 	var flag bool = false
 
 	if column == rowCells-1 {
@@ -63,7 +64,7 @@ func outOfBoardRight(column int, rowCells int, position int) bool {
 	return flag
 }
 
-func outOfBoardLeft(column int, rowCells int, position int) bool {
+func outOfBoardLeft(column int) bool {
 	var flag bool = false
 
 	if column == 0 {
@@ -73,7 +74,7 @@ func outOfBoardLeft(column int, rowCells int, position int) bool {
 	return flag
 }
 
-func outOfBoardUp(row int, rowCells int, position int) bool {
+func outOfBoardUp(row int) bool {
 	var flag bool = false
 
 	if row == 0 {
@@ -83,7 +84,7 @@ func outOfBoardUp(row int, rowCells int, position int) bool {
 	return flag
 }
 
-func outOfBoardDown(row int, rowCells int, position int) bool {
+func outOfBoardDown(row int, rowCells int) bool {
 	var flag bool = false
 
 	if row == rowCells-1 {
@@ -97,56 +98,56 @@ func getNeighbourhood(row int, column int, rowCells int, position int, hive *[TO
 	var neighbours int = 0
 
 	// Left
-	if !outOfBoardLeft(column, rowCells, position) {
+	if !outOfBoardLeft(column) {
 		if hive[position-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Right
-	if !outOfBoardRight(column, rowCells, position) {
+	if !outOfBoardRight(column, rowCells) {
 		if hive[position+1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Up
-	if !outOfBoardUp(row, rowCells, position) {
+	if !outOfBoardUp(row) {
 		if hive[position-rowCells] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Down
-	if !outOfBoardDown(row, rowCells, position) {
+	if !outOfBoardDown(row, rowCells) {
 		if hive[position+rowCells] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal left up
-	if (!outOfBoardLeft(column, rowCells, position)) && (!outOfBoardUp(row, rowCells, position)) {
+	if (!outOfBoardLeft(column)) && (!outOfBoardUp(row)) {
 		if hive[position-rowCells-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal right up
-	if (!outOfBoardRight(column, rowCells, position)) && (!outOfBoardUp(row, rowCells, position)) {
+	if (!outOfBoardRight(column, rowCells)) && (!outOfBoardUp(row)) {
 		if hive[position-rowCells+1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal left down
-	if (!outOfBoardLeft(column, rowCells, position)) && (!outOfBoardDown(row, rowCells, position)) {
+	if (!outOfBoardLeft(column)) && (!outOfBoardDown(row, rowCells)) {
 		if hive[position+rowCells-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal right down
-	if (!outOfBoardRight(column, rowCells, position)) && (!outOfBoardDown(row, rowCells, position)) {
+	if (!outOfBoardRight(column, rowCells)) && (!outOfBoardDown(row, rowCells)) {
 		if hive[position+rowCells+1] == alive {
 
 			neighbours = neighbours + 1
@@ -189,7 +190,7 @@ func displayGrid(hive *[TOTAL_CELLS]string, generation int) int {
 	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
 
 	var buffer string
-	
+
 	clearScreen()
 	fmt.Println("Generation:" + strconv.Itoa(generation))
 	for i := 0; i < TOTAL_CELLS; i = i + rowCells {
