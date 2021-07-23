@@ -9,9 +9,10 @@ import (
 )
 
 // Configurations
-const TOTAL_CELLS int = 1600
+const TOTAL_CELLS int = 1600 // should be a perfect square
 const alive string = "O"
 const dead string = "."
+// ----
 
 func genesis() string {
 	rand.Seed(time.Now().UnixNano())
