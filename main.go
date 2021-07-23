@@ -10,8 +10,8 @@ import (
 
 // Configurations
 const TOTAL_CELLS int = 900 // should be a perfect square
-const alive string = "O"
-const dead string = "."
+const alive string = "●"
+const dead string = "○"
 // ----
 
 func clearScreen() int {
@@ -189,7 +189,8 @@ func displayGrid(hive *[TOTAL_CELLS]string, generation int) int {
 	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
 
 	var buffer string
-
+	
+	clearScreen()
 	fmt.Println("Generation:" + strconv.Itoa(generation))
 	for i := 0; i < TOTAL_CELLS; i = i + rowCells {
 		buffer = ""
