@@ -9,7 +9,7 @@ import (
 )
 
 // Configurations
-const TOTAL_CELLS int = 1600 // should be a perfect square
+const TOTAL_CELLS int = 900 // should be a perfect square
 const alive string = "O"
 const dead string = "."
 // ----
