@@ -1,5 +1,5 @@
 # gameOfLife
-Conway's Game of Life in Golang
+> Conway's Game of Life in Golang
 
 ### Design features
 * 2D grid of square cells
