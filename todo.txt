@@ -1,7 +1,0 @@
--- Code --
-:: Refactor tick loops into one single loop function
-:: Start array at 0
--- Tests --
-:: https://onsi.github.io/ginkgo/#individual-specs-it
-:: https://golang.org/doc
-:: https://onsi.github.io/gomega/
