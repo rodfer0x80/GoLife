@@ -13,13 +13,6 @@ const TOTAL_CELLS int = 1600
 const alive string = "O"
 const dead string = "."
 
-// ----
-
-// Code readibility
-const HIVE_SIZE int = TOTAL_CELLS + 1
-
-// ----
-
 func genesis() string {
 	rand.Seed(time.Now().UnixNano())
 	var randomNumber int = rand.Intn(2)
@@ -34,16 +27,16 @@ func genesis() string {
 	return state
 }
 
-func bigBang(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]string, int) {
+func bigBang(hive *[TOTAL_CELLS]string, generation int) (*[TOTAL_CELLS]string, int) {
 	generation = 1
-	for i := 1; i <= TOTAL_CELLS; i++ {
+	for i := 0; i < TOTAL_CELLS; i++ {
 		hive[i] = genesis()
 	}
 
 	return hive, generation
 }
 
-func cycleOfLife(cell string, neighbours int) string {
+func naturalSelection(cell string, neighbours int) string {
 	if (cell == alive) && ((neighbours < 2) || (neighbours > 3)) {
 		cell = dead
 	}
@@ -53,133 +46,148 @@ func cycleOfLife(cell string, neighbours int) string {
 
 	return cell
 }
-func tick(hive *[HIVE_SIZE]string, position int) string {
-	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
+
+func outOfBoardRight(column int, rowCells int, position int) bool {
+	var flag bool = false
+
+	if column == rowCells-1 {
+		flag = true
+	}
+
+	return flag
+}
+
+func outOfBoardLeft(column int, rowCells int, position int) bool {
+	var flag bool = false
+
+	if column == 0 {
+		flag = true
+	}
+
+	return flag
+}
+
+func outOfBoardUp(row int, rowCells int, position int) bool {
+	var flag bool = false
+
+	if row == 0 {
+		flag = true
+	}
+
+	return flag
+}
+
+func outOfBoardDown(row int, rowCells int, position int) bool {
+	var flag bool = false
+
+	if row == rowCells-1 {
+		flag = true
+	}
+
+	return flag
+}
+
+func getNeighbourhood(row int, column int, rowCells int, position int, hive *[TOTAL_CELLS]string) int {
 	var neighbours int = 0
 
-	var outOfBoardLeft bool
-	var outOfBoardRight bool
-	var outOfBoardUp bool
-	var outOfBoardDown bool
-	var boardPosition int
-
 	// Left
-	outOfBoardLeft = false
-	boardPosition = 1
-	for boardPosition < HIVE_SIZE {
-		if position == boardPosition {
-			outOfBoardLeft = true
-		}
-		boardPosition = boardPosition + rowCells
-	}
-	if outOfBoardLeft == false {
+	if !outOfBoardLeft(column, rowCells, position) {
 		if hive[position-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Right
-	outOfBoardRight = false
-	boardPosition = rowCells
-	for boardPosition < HIVE_SIZE {
-		if position == boardPosition {
-			outOfBoardRight = true
-		}
-		boardPosition = boardPosition + rowCells
-	}
-	if outOfBoardRight == false {
+	if !outOfBoardRight(column, rowCells, position) {
 		if hive[position+1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Up
-	outOfBoardUp = false
-	boardPosition = 1
-	for boardPosition <= rowCells {
-		if position == boardPosition {
-			outOfBoardUp = true
-		}
-		boardPosition = boardPosition + 1
-	}
-	if outOfBoardUp == false {
+	if !outOfBoardUp(row, rowCells, position) {
 		if hive[position-rowCells] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Down
-	outOfBoardDown = false
-	boardPosition = (HIVE_SIZE - rowCells)
-	for boardPosition < HIVE_SIZE {
-		if position == boardPosition {
-			outOfBoardDown = true
-		}
-		boardPosition = boardPosition + 1
-	}
-	if outOfBoardDown == false {
+	if !outOfBoardDown(row, rowCells, position) {
 		if hive[position+rowCells] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal left up
-	if (outOfBoardLeft == false) && (outOfBoardUp == false) {
+	if (!outOfBoardLeft(column, rowCells, position)) && (!outOfBoardUp(row, rowCells, position)) {
 		if hive[position-rowCells-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal right up
-	if (outOfBoardRight == false) && (outOfBoardUp == false) {
+	if (!outOfBoardRight(column, rowCells, position)) && (!outOfBoardUp(row, rowCells, position)) {
 		if hive[position-rowCells+1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
 	// Diagonal left down
-	if (outOfBoardLeft == false) && (outOfBoardDown == false) {
+	if (!outOfBoardLeft(column, rowCells, position)) && (!outOfBoardDown(row, rowCells, position)) {
 		if hive[position+rowCells-1] == alive {
 			neighbours = neighbours + 1
 		}
 	}
 
-	// Diagonal right now
-	if (outOfBoardRight == false) && (outOfBoardDown == false) {
+	// Diagonal right down
+	if (!outOfBoardRight(column, rowCells, position)) && (!outOfBoardDown(row, rowCells, position)) {
 		if hive[position+rowCells+1] == alive {
+
 			neighbours = neighbours + 1
 		}
 	}
 
+	return neighbours
+}
+
+func tick(hive *[TOTAL_CELLS]string, position int) string {
+	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
+	var row int = position / rowCells
+	var column int = position - (rowCells * row)
+
+	var neighbours int = getNeighbourhood(row, column, rowCells, position, hive)
+
 	var cell string = hive[position]
-	cell = cycleOfLife(cell, neighbours)
+	cell = naturalSelection(cell, neighbours)
 
 	return cell
 }
 
-func naturalSelection(hive *[HIVE_SIZE]string, generation int) (*[HIVE_SIZE]string, int) {
-	var postHive = new([HIVE_SIZE]string)
+func cycleOfLife(hive *[TOTAL_CELLS]string, generation int) (*[TOTAL_CELLS]string, int) {
+	var postHive = new([TOTAL_CELLS]string)
 
 	generation = generation + 1
-	for position := 1; position <= TOTAL_CELLS; position++ {
+
+	for position := 0; position < TOTAL_CELLS; position++ {
 		postHive[position] = tick(hive, position)
 	}
 
-	for position := 1; position <= TOTAL_CELLS; position++ {
+	for position := 0; position < TOTAL_CELLS; position++ {
 		hive[position] = postHive[position]
 	}
 
 	return hive, generation
 }
 
-func displayGrid(hive *[HIVE_SIZE]string, generation int) int {
+func displayGrid(hive *[TOTAL_CELLS]string, generation int) int {
 	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
+
 	var buffer string
 
 	fmt.Println("Generation:" + strconv.Itoa(generation))
 	for i := 0; i < TOTAL_CELLS; i = i + rowCells {
 		buffer = ""
-		for ii := 1; ii <= rowCells; ii++ {
+		for ii := 0; ii < rowCells; ii++ {
 			buffer = buffer + hive[i+ii] + " "
 		}
 		fmt.Println(buffer)
@@ -190,14 +198,14 @@ func displayGrid(hive *[HIVE_SIZE]string, generation int) int {
 
 func main() {
 	var generation int = 0
-	var hive = new([HIVE_SIZE]string)
+	var hive = new([TOTAL_CELLS]string)
 
 	hive, generation = bigBang(hive, generation)
 	displayGrid(hive, generation)
 
 	for 1 < 2 {
 		time.Sleep(1 * time.Second)
-		hive, generation = naturalSelection(hive, generation)
+		hive, generation = cycleOfLife(hive, generation)
 		displayGrid(hive, generation)
 	}
 }
