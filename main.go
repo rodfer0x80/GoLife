@@ -14,6 +14,11 @@ const alive string = "O"
 const dead string = "."
 // ----
 
+func clearScreen() int {
+        fmt.Println("\033[2J")
+        return 0
+}
+
 func genesis() string {
 	rand.Seed(time.Now().UnixNano())
 	var randomNumber int = rand.Intn(2)
