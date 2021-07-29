@@ -8,10 +8,12 @@ import (
 	"time"
 )
 
-// Configurations
-const TOTAL_CELLS int = 900 // should be a perfect square
-const alive string = "●"
-const dead string = "○"
+// Graphical configurations
+const alive string = "o"
+const dead string = "."
+
+// const alive string = "●"
+// const dead string = "○"
 
 // ----
 
@@ -34,13 +36,13 @@ func genesis() string {
 	return state
 }
 
-func bigBang(hive *[TOTAL_CELLS]string, generation int) (*[TOTAL_CELLS]string, int) {
+func bigBang(hive []string, generation int, TOTAL_CELLS int) int {
 	generation = 1
 	for i := 0; i < TOTAL_CELLS; i++ {
 		hive[i] = genesis()
 	}
 
-	return hive, generation
+	return generation
 }
 
 func naturalSelection(cell string, neighbours int) string {
@@ -94,7 +96,7 @@ func outOfBoardDown(row int, rowCells int) bool {
 	return flag
 }
 
-func getNeighbourhood(row int, column int, rowCells int, position int, hive *[TOTAL_CELLS]string) int {
+func getNeighbourhood(row int, column int, rowCells int, position int, hive []string) int {
 	var neighbours int = 0
 
 	// Left
@@ -157,7 +159,7 @@ func getNeighbourhood(row int, column int, rowCells int, position int, hive *[TO
 	return neighbours
 }
 
-func tick(hive *[TOTAL_CELLS]string, position int) string {
+func tick(hive []string, position int, TOTAL_CELLS int) string {
 	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
 	var row int = position / rowCells
 	var column int = position - (rowCells * row)
@@ -170,23 +172,23 @@ func tick(hive *[TOTAL_CELLS]string, position int) string {
 	return cell
 }
 
-func cycleOfLife(hive *[TOTAL_CELLS]string, generation int) (*[TOTAL_CELLS]string, int) {
-	var postHive = new([TOTAL_CELLS]string)
+func cycleOfLife(hive []string, generation int, TOTAL_CELLS int) int {
+	var postHive = make([]string, TOTAL_CELLS, TOTAL_CELLS)
 
 	generation = generation + 1
 
 	for position := 0; position < TOTAL_CELLS; position++ {
-		postHive[position] = tick(hive, position)
+		postHive[position] = tick(hive, position, TOTAL_CELLS)
 	}
 
 	for position := 0; position < TOTAL_CELLS; position++ {
 		hive[position] = postHive[position]
 	}
 
-	return hive, generation
+	return generation
 }
 
-func displayGrid(hive *[TOTAL_CELLS]string, generation int) int {
+func displayGrid(hive []string, generation int, TOTAL_CELLS int) int {
 	var rowCells int = int(math.Sqrt(float64(TOTAL_CELLS)))
 
 	var buffer string
@@ -205,15 +207,18 @@ func displayGrid(hive *[TOTAL_CELLS]string, generation int) int {
 }
 
 func main() {
-	var generation int = 0
-	var hive = new([TOTAL_CELLS]string)
+	// should be a perfect square
+	const TOTAL_CELLS int = 900
 
-	hive, generation = bigBang(hive, generation)
-	displayGrid(hive, generation)
+	var generation int = 0
+	var hive = make([]string, TOTAL_CELLS, TOTAL_CELLS)
+
+	generation = bigBang(hive[:], generation, TOTAL_CELLS)
+	displayGrid(hive[:], generation, TOTAL_CELLS)
 
 	for 1 < 2 {
 		time.Sleep(1 * time.Second)
-		hive, generation = cycleOfLife(hive, generation)
-		displayGrid(hive, generation)
+		generation = cycleOfLife(hive[:], generation, TOTAL_CELLS)
+		displayGrid(hive[:], generation, TOTAL_CELLS)
 	}
 }
