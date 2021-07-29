@@ -9,10 +9,13 @@ import (
 )
 
 // Configurations
-const TOTAL_CELLS int = 900 // should be a perfect square
-const alive string = "●"
-const dead string = "○"
+// should be a perfect square
+const TOTAL_CELLS int = 900 
+// ----
 
+// Graphics
+const alive string = "●"
+const dead string = "."
 // ----
 
 func clearScreen() int {
