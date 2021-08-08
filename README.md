@@ -1,5 +1,5 @@
 # gameOfLife
-> Conway's Game of Life in Golang
+### Conway's Game of Life
 
 ### Design specs
 * 2D grid of square cells in a 1D array
