@@ -1,4 +1,4 @@
-# gameOfLife
+# GoLife
 ### Conway's Game of Life
 
 #### Design specs
