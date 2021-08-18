@@ -10,3 +10,6 @@
 * any live cell with 2 or 3 live neighbours lives
 * any dead cell with 3 live neighbours becomes a live cell
 * all other live cells dies and dead cells stay dead
+
+### Next
+- Build this in Haskell
