@@ -1,6 +1,6 @@
 # GoLife
 ### Conway's Game of Life
-<img src="imgs/golife.jpg" width="200px" height="300px"></img>
+<img src="imgs/golife.jpg" width="300px" height="450px"></img>
 
 ### Run
 > install go
