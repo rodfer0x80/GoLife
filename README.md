@@ -1,5 +1,6 @@
 # GoLife
 ### Conway's Game of Life
+<img src="imgs/golife.jpg"></img>
 
 ### Run
 > install go
