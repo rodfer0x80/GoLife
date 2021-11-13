@@ -1,6 +1,7 @@
 # GoLife
 ### Conway's Game of Life
-<img src="imgs/golife.jpg"></img>
+<img src="imgs/golife.jpg" width="300px" height="400px"></img>
+
 #### Design specs
 * 2D grid of square cells in a 1D array
 * cells have two states - dead or alive
