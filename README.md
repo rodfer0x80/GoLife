@@ -2,11 +2,7 @@
 ### Conway's Game of Life
 <img src="imgs/golife.jpg" width="300px" height="400px"></img>
 
-### Run
-> install go
-> go run .
-
-#### Design specs
+#### Guidelines
 * 2D grid of square cells in a 1D array
 * cells have two states - dead or alive
 * cells interact with their surrouding neighbours - horizontally, vertically and diagonally - for every world tick 
